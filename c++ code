@@ -1,0 +1,62 @@
+#include <iostream>
+
+using namespace std;
+
+//swap function
+template <typename T>
+void swap(T *a,T *b){
+T temp;
+temp = *a;
+*a = *b;
+*b = temp;
+}
+
+//partition function
+template <typename T>
+int partition(T *arr,int left,int right){
+	int i = left, j = right;
+      int tmp;
+      int pivot = arr[(left + right) / 2];
+     
+      while (i <= j) {
+            while (arr[i] < pivot)
+                  i++;
+            while (arr[j] > pivot)
+                  j--;
+            if (i <= j) {
+				swap<int>(&arr[i],&arr[j]);
+                  i++;
+                  j--;
+            }
+      };
+     
+      return i;
+}
+
+//quicksort function
+template <typename T>
+void quicksort(T *arr,int start,int end){
+	int pindex,i;
+	if(start<end){
+		pindex=partition<int>(arr,start,end);		
+		quicksort<T>(arr,start,pindex-1);
+		quicksort<T>(arr,pindex+1,end);
+	}
+}
+
+//main function
+int main(int argc, char const *argv[])
+{
+	int array[]={21,3,2,15,1,8,6};
+	int size = sizeof(array)/sizeof(int);
+	cout<<"size"<<size<<endl;
+	quicksort<int>(array,0,size-1);
+
+	//print
+	for (int i = 0; i < size; ++i)
+	{
+		cout<<"->"<<array[i];
+	}
+	cout<<endl;
+	return 0;
+}
